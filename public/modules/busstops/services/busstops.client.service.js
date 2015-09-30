@@ -2,14 +2,10 @@
 
 angular.module('busstops').factory('BusStops', ['$resource',
 	function($resource) {
-		return $resource('busstops/:articleId', {
-			articleId: '@_id'
-		}, {
-			query: {
-				method: 'GET',
-                params: {},
-                isArray: true
-			}
-		});
+		var BusStopResource = $resource('busstops/:id');
+        BusStopResource.findNear = function(lat, lng) {
+            return BusStopResource.query({lat: lat, lng:lng});
+        };
+        return BusStopResource;
 	}
 ]);
